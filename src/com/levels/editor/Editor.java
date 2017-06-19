@@ -153,6 +153,12 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 					if (cp.getElement() == Element.FLOOR)
 						fw.write("FLOOR " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");
+					if (cp.getElement() == Element.FLOOR2)
+						fw.write("FLOOR2 " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
+								+ ";\r\n");
+					if (cp.getElement() == Element.FLOOR3)
+						fw.write("FLOOR3 " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
+								+ ";\r\n");
 					if (cp.getElement() == Element.TREE)
 						fw.write("TREE " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");
@@ -177,14 +183,23 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 					if (cp.getElement() == Element.TABLE)
 						fw.write("TABLE " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");
+					if (cp.getElement() == Element.STRAW)
+						fw.write("STRAW " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
+								+ ";\r\n");
+					if (cp.getElement() == Element.PREENEMYHOME)
+						fw.write("PREENEMYHOME " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
+								+ ";\r\n");
+					if (cp.getElement() == Element.SHOP)
+						fw.write("SHOP " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
+								+ ";\r\n");
 				}
 				fw.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
+	
 	public static Point getXY(String line) {
 		int x = 0;
 		int i = 1;

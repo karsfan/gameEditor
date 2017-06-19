@@ -12,9 +12,6 @@ public class Tile implements ICollidable {
 	private Element element;
 	private Dimension size;
 	
-	
-	
-	
 	public Tile(Point point, BufferedImage image, Element element, Dimension size) {
 		this.point = point;
 		this.image = image;
@@ -33,6 +30,21 @@ public class Tile implements ICollidable {
 		case "GROUND":
 			this.element = Element.GROUND;
 			image = ToolsPanel.getGroundImage();
+			size = new Dimension(32, 32);
+			break;
+		case "FLOOR":
+			this.element = Element.FLOOR;
+			image = ToolsPanel.getFloorImage();
+			size = new Dimension(32, 32);
+			break;
+		case "FLOOR2":
+			this.element = Element.FLOOR2;
+			image = ToolsPanel.getFloor2Image();
+			size = new Dimension(32, 32);
+			break;
+		case "FLOOR3":
+			this.element = Element.FLOOR3;
+			image = ToolsPanel.getFloor3Image();
 			size = new Dimension(32, 32);
 			break;
 		case "ROAD":
@@ -75,7 +87,21 @@ public class Tile implements ICollidable {
 			image = ToolsPanel.getTableImage();
 			size = new Dimension(32, 32);
 			break;
-			
+		case "SHOP":
+			this.element = Element.SHOP;
+			image = ToolsPanel.getShopImage();
+			size = new Dimension(64, 64);
+			break;
+		case "STRAW":
+			this.element = Element.STRAW;
+			image = ToolsPanel.getStrawImage();
+			size = new Dimension(64,64);
+			break;
+		case "PREENEMYHOME":
+			this.element = Element.PREENEMYHOME;
+			image = ToolsPanel.getPreEnemyHomeImage();
+			size = new Dimension(96, 96);
+			break;
 		default:
 			break;
 		}

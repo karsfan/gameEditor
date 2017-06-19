@@ -148,7 +148,7 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		else if (fill)
 			fillTiles();
-		else if (cp.getElement() == Element.GROUND || cp.getElement() == Element.FLOOR) {
+		else if (cp.getElement() == Element.GROUND || cp.getElement() == Element.FLOOR || cp.getElement() == Element.FLOOR2 || cp.getElement() == Element.FLOOR3) {
 			if (!duplicate(cp))
 				points.add(0, cp);
 		} else if (!existTile(cp))
@@ -159,7 +159,7 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 	}
 
 	void fillTiles() {
-		if (currentElement == Element.GROUND) {
+		if (currentElement == Element.GROUND || currentElement == Element.FLOOR || currentElement == Element.FLOOR2 || currentElement == Element.FLOOR3 ) {
 			for (int i = 0; i < P_WIDTH * size.width / scale; i += size.width)
 				for (int j = 0; j < P_HEIGHT * size.height / scale; j += size.height)
 					if (!duplicate(
@@ -190,7 +190,7 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 		for (int i = 0; i < points.size(); i++) {
 			Tile tmp = points.get(i);
 
-			if (tile.collide(tmp) && (tmp.getElement() != Element.GROUND && tmp.getElement() != Element.FLOOR))
+			if (tile.collide(tmp) && (tmp.getElement() != Element.GROUND && tmp.getElement() != Element.FLOOR && tmp.getElement() != Element.FLOOR2 && tmp.getElement() != Element.FLOOR3))
 				return true;
 		}
 		return false;
