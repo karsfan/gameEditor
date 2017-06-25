@@ -6,9 +6,14 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -16,11 +21,12 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	public enum Element {
-		HOME, GROUND, BUILDING, WATER, ROCK, BIGHOME, ROAD, FLOOR, TREE, FOREST1, FOREST2, TABLE, FLOOR2, FLOOR3, SHOP, STRAW, PREENEMYHOME
+		HOME, GROUND, BUILDING, WATER, ROCK, BIGHOME, ROAD, FLOOR, TREE, FOREST1, FOREST2, FLOOR2, FLOOR3, SHOP, STRAW, PREENEMYHOME, CASTLE
 	};
 
 	private PreviewPanel pp;
 	private JButton home = new JButton();
+	private JButton castle = new JButton();
 	private JButton shop = new JButton();
 	private JButton preEnemyHome = new JButton();
 	private JButton straw = new JButton();
@@ -35,7 +41,6 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private JButton rock = new JButton();
 	private JButton forest1 = new JButton();
 	private JButton forest2 = new JButton();
-	private JButton table = new JButton();
 
 	private JButton grid = new JButton();
 	private JButton canc = new JButton();
@@ -46,7 +51,8 @@ public class ToolsPanel extends JPanel implements ActionListener {
 
 	public static BufferedImageLoader loader = new BufferedImageLoader();
 	public static BufferedImage homeImage = loader.loadImage("/home.png");
-	public static BufferedImage shopImage = loader.loadImage("/shop.png");	
+	public static BufferedImage castleImage = loader.loadImage("/castle.png");
+	public static BufferedImage shopImage = loader.loadImage("/shop.png");
 	public static BufferedImage preEnemyHomeImage = loader.loadImage("/preEnemyHome.png");
 	public static BufferedImage strawImage = loader.loadImage("/straw.png");
 	public static BufferedImage bigHomeImage = loader.loadImage("/bigHome.png");
@@ -60,7 +66,6 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private static BufferedImage rockImage = loader.loadImage("/rock.png");
 	private static BufferedImage forest1Image = loader.loadImage("/forest1.png");
 	private static BufferedImage forest2Image = loader.loadImage("/forest2.png");
-	private static BufferedImage tableImage = loader.loadImage("/table.png");
 
 	private BufferedImage gridImage = loader.loadImage("/grid.png");
 	private BufferedImage cancImage = loader.loadImage("/eraser.png");
@@ -70,9 +75,24 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private BufferedImage zoomInImage = loader.loadImage("/zoom.png");
 	private BufferedImage undoImage = loader.loadImage("/undo.png");
 
+	private BufferedImage homesLabelImage = loader.loadImage("/labels/homes.png");
+	private JLabel homesLabel = new JLabel(new ImageIcon(homesLabelImage));
+	
+	private BufferedImage ambientationsLabelImage = loader.loadImage("/labels/ambientation.png");
+	private JLabel ambientationsLabel = new JLabel(new ImageIcon(ambientationsLabelImage));
+	
+	private BufferedImage floorsLabelImage = loader.loadImage("/labels/floors.png");
+	private JLabel floorsLabel = new JLabel(new ImageIcon(floorsLabelImage));
+	
+	private BufferedImage toolsLabelImage = loader.loadImage("/labels/tools.png");
+	private JLabel toolsLabel = new JLabel(new ImageIcon(toolsLabelImage));
+	
+	private BufferedImage emptyLabelImage = loader.loadImage("/labels/empty.png");
+	private JLabel emptyLabel = new JLabel(new ImageIcon(emptyLabelImage));
+
 	private JPanel elements = new JPanel(new FlowLayout());
 	private JPanel tools = new JPanel(new FlowLayout());
-
+	
 	public ToolsPanel(PreviewPanel pp) {
 		super();
 		this.pp = pp;
@@ -80,31 +100,38 @@ public class ToolsPanel extends JPanel implements ActionListener {
 		setFocusable(true);
 		add(elements, BorderLayout.CENTER);
 		add(tools, BorderLayout.SOUTH);
-
+	    
+	    elements.add(homesLabel);
 		createButton(home, homeImage, elements);
 		createButton(shop, shopImage, elements);
 		createButton(preEnemyHome, preEnemyHomeImage, elements);
-		createButton(straw, strawImage, elements);
 		createButton(bigHome, bigHomeImage, elements);
+		createButton(castle, castleImage, elements);
+		
+		elements.add(ambientationsLabel);
 		createButton(tree, treeImage, elements);
+		createButton(forest1, forest1Image, elements);
+		createButton(forest2, forest2Image, elements);
+		createButton(straw, strawImage, elements);
+		elements.add(emptyLabel);
 		createButton(rock, rockImage, elements);
 		createButton(ground, groundImage, elements);
+		createButton(water, waterImage, elements);
+		
+		elements.add(floorsLabel);
 		createButton(floor, floorImage, elements);
 		createButton(floor2, floor2Image, elements);
 		createButton(floor3, floor3Image, elements);
-		createButton(water, waterImage, elements);
 		createButton(road, roadImage, elements);
-		createButton(forest1, forest1Image, elements);
-		createButton(forest2, forest2Image, elements);
-		createButton(table, tableImage, elements);
-
+		
+		//tools.add(toolsLabel);
 		createButton(grid, gridImage, tools);
 		createButton(canc, cancImage, tools);
 		createButton(undo, undoImage, tools);
 		createButton(fill, fillImage, tools);
 		createButton(clear, clearImage, tools);
 		createButton(zoomIn, zoomInImage, tools);
-
+		
 		pp.paintImage = homeImage;
 		pp.currentElement = Element.HOME;
 		pp.size = new Dimension(PreviewPanel.scale * 2, PreviewPanel.scale * 2);
@@ -170,31 +197,31 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	public static BufferedImage getThreeImage() {
 		return treeImage;
 	}
-	
+
 	public static BufferedImage getStrawImage() {
 		return strawImage;
 	}
-	
+
 	public static BufferedImage getPreEnemyHomeImage() {
 		return preEnemyHomeImage;
 	}
-	
+
 	public static BufferedImage getShopImage() {
 		return shopImage;
 	}
-	
+
 	public static BufferedImage getGroundImage() {
 		return groundImage;
 	}
-	
+
 	public static BufferedImage getFloorImage() {
 		return floorImage;
 	}
-	
+
 	public static BufferedImage getFloor2Image() {
 		return floor2Image;
 	}
-	
+
 	public static BufferedImage getFloor3Image() {
 		return floor3Image;
 	}
@@ -223,10 +250,6 @@ public class ToolsPanel extends JPanel implements ActionListener {
 		return forest2Image;
 	}
 
-	public static BufferedImage getTableImage() {
-		return tableImage;
-	}
-
 	@SuppressWarnings("static-access")
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -244,6 +267,13 @@ public class ToolsPanel extends JPanel implements ActionListener {
 			pp.remove = false;
 			pp.fill = false;
 			
+		} else if (e.getSource() == castle) {
+			pp.paintImage = castleImage;
+			pp.currentElement = Element.CASTLE;
+			pp.size = new Dimension(160, 160);
+			pp.remove = false;
+			pp.fill = false;
+
 		} else if (e.getSource() == shop) {
 			pp.paintImage = shopImage;
 			pp.currentElement = Element.SHOP;
@@ -257,14 +287,13 @@ public class ToolsPanel extends JPanel implements ActionListener {
 			pp.size = new Dimension(64, 64);
 			pp.remove = false;
 			pp.fill = false;
-			
+
 		} else if (e.getSource() == preEnemyHome) {
 			pp.paintImage = preEnemyHomeImage;
 			pp.currentElement = Element.PREENEMYHOME;
 			pp.size = new Dimension(96, 96);
 			pp.remove = false;
 			pp.fill = false;
-
 
 		} else if (e.getSource() == tree) {
 			pp.paintImage = treeImage;
@@ -331,13 +360,6 @@ public class ToolsPanel extends JPanel implements ActionListener {
 			pp.paintImage = forest2Image;
 			pp.currentElement = Element.FOREST2;
 			pp.size = new Dimension(64, 96);
-			pp.remove = false;
-			pp.fill = false;
-			
-		} else if (e.getSource() == table) {
-			pp.paintImage = tableImage;
-			pp.currentElement = Element.TABLE;
-			pp.size = new Dimension(32, 32);
 			pp.remove = false;
 			pp.fill = false;
 
