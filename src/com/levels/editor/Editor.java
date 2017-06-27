@@ -180,9 +180,6 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 					if (cp.getElement() == Element.FOREST2)
 						fw.write("FOREST2 " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");
-					if (cp.getElement() == Element.TABLE)
-						fw.write("TABLE " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
-								+ ";\r\n");
 					if (cp.getElement() == Element.STRAW)
 						fw.write("STRAW " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");

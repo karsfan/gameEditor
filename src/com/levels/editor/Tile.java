@@ -82,11 +82,6 @@ public class Tile implements ICollidable {
 			image = ToolsPanel.getForest2Image();
 			size = new Dimension(64, 96);
 			break;
-		case "TABLE":
-			this.element = Element.TABLE;
-			image = ToolsPanel.getTableImage();
-			size = new Dimension(32, 32);
-			break;
 		case "SHOP":
 			this.element = Element.SHOP;
 			image = ToolsPanel.getShopImage();
