@@ -42,8 +42,8 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 		currentElement = null;
 		size = null;
 		tiledisegnare = new Tile("HOME", new Point(1, 1));
-		P_WIDTH = 1440;
-		P_HEIGHT = 960;
+		P_WIDTH = EditorConfig.WIDTH;
+		P_HEIGHT = EditorConfig.HEIGHT;
 		scale = 32;
 
 		remove = false;
@@ -145,10 +145,9 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		if (remove) // bisogna eliminare il tiledadisegnare
 			delete(clickToGrid(x, y));
-
 		else if (fill)
 			fillTiles();
-		else if (cp.getElement() == Element.GROUND || cp.getElement() == Element.FLOOR || cp.getElement() == Element.FLOOR2 || cp.getElement() == Element.FLOOR3) {
+		else if (cp.getElement() == Element.GROUND) {
 			if (!duplicate(cp))
 				points.add(0, cp);
 		} else if (!existTile(cp))
@@ -159,7 +158,8 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 	}
 
 	void fillTiles() {
-		if (currentElement == Element.GROUND || currentElement == Element.FLOOR || currentElement == Element.FLOOR2 || currentElement == Element.FLOOR3 ) {
+		if (currentElement == Element.GROUND || currentElement == Element.FLOOR || currentElement == Element.FLOOR2
+				|| currentElement == Element.FLOOR3) {
 			for (int i = 0; i < P_WIDTH * size.width / scale; i += size.width)
 				for (int j = 0; j < P_HEIGHT * size.height / scale; j += size.height)
 					if (!duplicate(
@@ -178,19 +178,18 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 	}
 
 	private boolean existTile(Tile tile) {
+		// controllo che siano completamente all'interno della griglia
 		if (tile.getPoint().x + tile.getSize().getWidth() / 32 > P_WIDTH / scale
-				|| tile.getPoint().y + tile.getSize().getHeight() / 32 > P_HEIGHT / scale)// controllo
-																							// che
-																							// siano
-																							// completamente
-																							// all'interno
-																							// della
-																							// griglia
+				|| tile.getPoint().y + tile.getSize().getHeight() / 32 > P_HEIGHT / scale)
 			return true;
+		// controllo che non sto mettendo alberi sul pavimento
 		for (int i = 0; i < points.size(); i++) {
 			Tile tmp = points.get(i);
-
-			if (tile.collide(tmp) && (tmp.getElement() != Element.GROUND && tmp.getElement() != Element.FLOOR && tmp.getElement() != Element.FLOOR2 && tmp.getElement() != Element.FLOOR3))
+			if (tile.collide(tmp) && (tmp.getElement() != Element.GROUND)
+					&& !((tile.getElement() != Element.TREE && tile.getElement() != Element.FOREST1
+							&& tile.getElement() != Element.FOREST2)
+							&& (tmp.getElement() == Element.ROAD || tmp.getElement() == Element.FLOOR
+									|| tmp.getElement() == Element.FLOOR2 || tmp.getElement() == Element.FLOOR3)))
 				return true;
 		}
 		return false;

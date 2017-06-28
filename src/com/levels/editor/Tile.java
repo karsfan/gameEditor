@@ -67,9 +67,9 @@ public class Tile implements ICollidable {
 			image = ToolsPanel.getRockImage();
 			size = new Dimension(32, 32);
 			break;
-		case "BIGHOME":
-			this.element = Element.BIGHOME;
-			image = ToolsPanel.getBigHomeImage();
+		case "TEMPLE":
+			this.element = Element.TEMPLE;
+			image = ToolsPanel.getTempleImage();
 			size = new Dimension(128, 96);
 			break;
 		case "FOREST1":
@@ -96,6 +96,11 @@ public class Tile implements ICollidable {
 			this.element = Element.PREENEMYHOME;
 			image = ToolsPanel.getPreEnemyHomeImage();
 			size = new Dimension(96, 96);
+			break;
+		case "CASTLE":
+			this.element = Element.CASTLE;
+			image = ToolsPanel.getCastleImage();
+			size = new Dimension(160, 160);
 			break;
 		default:
 			break;

@@ -6,11 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,7 +17,7 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	public enum Element {
-		HOME, GROUND, BUILDING, WATER, ROCK, BIGHOME, ROAD, FLOOR, TREE, FOREST1, FOREST2, FLOOR2, FLOOR3, SHOP, STRAW, PREENEMYHOME, CASTLE
+		HOME, GROUND, BUILDING, WATER, ROCK, TEMPLE, ROAD, FLOOR, TREE, FOREST1, FOREST2, FLOOR2, FLOOR3, SHOP, STRAW, PREENEMYHOME, CASTLE
 	};
 
 	private PreviewPanel pp;
@@ -30,7 +26,7 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private JButton shop = new JButton();
 	private JButton preEnemyHome = new JButton();
 	private JButton straw = new JButton();
-	private JButton bigHome = new JButton();
+	private JButton temple = new JButton();
 	private JButton tree = new JButton();
 	private JButton ground = new JButton();
 	private JButton floor = new JButton();
@@ -55,7 +51,7 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	public static BufferedImage shopImage = loader.loadImage("/shop.png");
 	public static BufferedImage preEnemyHomeImage = loader.loadImage("/preEnemyHome.png");
 	public static BufferedImage strawImage = loader.loadImage("/straw.png");
-	public static BufferedImage bigHomeImage = loader.loadImage("/bigHome.png");
+	public static BufferedImage templeImage = loader.loadImage("/bigHome.png");
 	private static BufferedImage treeImage = loader.loadImage("/three.png");
 	private static BufferedImage groundImage = loader.loadImage("/ground.png");
 	private static BufferedImage floorImage = loader.loadImage("/floor.png");
@@ -105,7 +101,7 @@ public class ToolsPanel extends JPanel implements ActionListener {
 		createButton(home, homeImage, elements);
 		createButton(shop, shopImage, elements);
 		createButton(preEnemyHome, preEnemyHomeImage, elements);
-		createButton(bigHome, bigHomeImage, elements);
+		createButton(temple, templeImage, elements);
 		createButton(castle, castleImage, elements);
 		
 		elements.add(ambientationsLabel);
@@ -197,6 +193,11 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	public static BufferedImage getThreeImage() {
 		return treeImage;
 	}
+	
+	public static BufferedImage getCastleImage() {
+		return castleImage;
+	}
+
 
 	public static BufferedImage getStrawImage() {
 		return strawImage;
@@ -234,8 +235,8 @@ public class ToolsPanel extends JPanel implements ActionListener {
 		return waterImage;
 	}
 
-	public static BufferedImage getBigHomeImage() {
-		return bigHomeImage;
+	public static BufferedImage getTempleImage() {
+		return templeImage;
 	}
 
 	public static BufferedImage getRockImage() {
@@ -260,9 +261,9 @@ public class ToolsPanel extends JPanel implements ActionListener {
 			pp.remove = false;
 			pp.fill = false;
 
-		} else if (e.getSource() == bigHome) {
-			pp.paintImage = bigHomeImage;
-			pp.currentElement = Element.BIGHOME;
+		} else if (e.getSource() == temple) {
+			pp.paintImage = templeImage;
+			pp.currentElement = Element.TEMPLE;
 			pp.size = new Dimension(128, 96);
 			pp.remove = false;
 			pp.fill = false;
@@ -392,15 +393,15 @@ public class ToolsPanel extends JPanel implements ActionListener {
 			pp.above = !pp.above;
 			if (pp.above) {
 				pp.scale = 16;
-				pp.P_WIDTH = 720;
-				pp.P_HEIGHT = 480;
+				pp.P_WIDTH = EditorConfig.WIDTH / 2;
+				pp.P_HEIGHT = EditorConfig.HEIGHT / 2;
 				pp.setLocation(0, 0);
 				Editor.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				Editor.scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 			} else {
 				pp.scale = 32;
-				pp.P_HEIGHT = 960;
-				pp.P_WIDTH = 1440;
+				pp.P_HEIGHT = EditorConfig.WIDTH;
+				pp.P_WIDTH = EditorConfig.HEIGHT;
 				Editor.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 				Editor.scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 			}
