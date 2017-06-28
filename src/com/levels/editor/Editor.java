@@ -58,7 +58,7 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 		setJMenuBar(menuBar);
 		file = new JMenu("File");
 		menuBar.add(file);
-		
+
 		file.add(Open);
 		file.add(Save);
 		file.addSeparator();
@@ -79,6 +79,7 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 
 	static Action Open = new AbstractAction("Open a file..") { // menu apri
 		private static final long serialVersionUID = 1L;
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
@@ -89,6 +90,7 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 	static Action Save = new AbstractAction("Save a file..") { // menu salva
 
 		private static final long serialVersionUID = 1L;
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			saveFile();
@@ -98,6 +100,7 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 	static Action Exit = new AbstractAction("Exit") { // menu esci
 
 		private static final long serialVersionUID = 1L;
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
@@ -113,8 +116,13 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 			try {
 				Scanner input = new Scanner(System.in);
 				input = new Scanner(fr);
+				String line = input.nextLine();
+				String[] split = line.split(" ");
+				EditorConfig.WIDTH = Integer.parseInt(split[0]);
+				EditorConfig.HEIGHT = Integer.parseInt(split[1]);
 				while (input.hasNextLine()) {
-					String line = input.nextLine();
+					line = input.nextLine();
+
 					String[] splittata = line.split(" ");
 
 					for (int i = 0; i < splittata.length - 1; i++)
@@ -141,11 +149,15 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 				fw = new FileWriter(fc.getSelectedFile().getAbsolutePath());
 
 				// Salvataggio del vettore delle posizioni
+				fw.write(EditorConfig.WIDTH + " " + EditorConfig.HEIGHT + "\r\n");
 				Iterator<Tile> it = (Iterator<Tile>) PreviewPanel.points.iterator();
 				while (it.hasNext()) {
 					Tile cp = (Tile) it.next();
 					if (cp.getElement() == Element.HOME)
 						fw.write("HOME " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
+								+ ";\r\n");
+					if (cp.getElement() == Element.CASTLE)
+						fw.write("CASTLE " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");
 					if (cp.getElement() == Element.GROUND)
 						fw.write("GROUND " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
@@ -168,8 +180,8 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 					if (cp.getElement() == Element.ROCK)
 						fw.write("ROCK " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");
-					if (cp.getElement() == Element.BIGHOME)
-						fw.write("BIGHOME " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
+					if (cp.getElement() == Element.TEMPLE)
+						fw.write("TEMPLE " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");
 					if (cp.getElement() == Element.ROAD)
 						fw.write("ROAD " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
@@ -196,7 +208,7 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 			}
 		}
 	}
-	
+
 	public static Point getXY(String line) {
 		int x = 0;
 		int i = 1;
