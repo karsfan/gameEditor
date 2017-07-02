@@ -6,10 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-<<<<<<< HEAD
-=======
-
->>>>>>> 6df0c965cb10d5042e66922448a3b4f123e9cbe0
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
