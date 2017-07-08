@@ -8,6 +8,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowListener;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -223,9 +225,9 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 		return new Point(x, y);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_S && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
 			saveFile();
 			return true;
@@ -235,10 +237,19 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 				openFile(fc.getSelectedFile().getAbsolutePath());
 				return true;
 			}
+	
+		if (panel.points.size() > 0)
+			if ((e.getKeyCode() == KeyEvent.VK_Z) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+				panel.points.remove(panel.points.size() - 1);
+				panel.repaint();
+				return true;
+			}
+
 		if ((e.getKeyCode() == KeyEvent.VK_C)) {
 			PreviewPanel.points.clear();
 			return true;
 		}
+
 		return false;
 	}
 
