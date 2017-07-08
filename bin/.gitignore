@@ -1,4 +1,5 @@
 /com/
+<<<<<<< HEAD
 /forest2.png
 /grid.png
 /ground.png
@@ -16,3 +17,6 @@
 /undo.png
 /water.png
 /zoom.png
+=======
+/labels/
+>>>>>>> b641114c145ccd23e1e38965ff24309c66946be0

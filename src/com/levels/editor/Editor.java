@@ -223,9 +223,9 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 		return new Point(x, y);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_S && (e.getModifiers() & KeyEvent.CTRL_MASK) != 0) {
 			saveFile();
 			return true;
@@ -235,10 +235,19 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 				openFile(fc.getSelectedFile().getAbsolutePath());
 				return true;
 			}
+	
+		if (panel.points.size() > 0)
+			if ((e.getKeyCode() == KeyEvent.VK_Z) && ((e.getModifiers() & KeyEvent.CTRL_MASK) != 0)) {
+				panel.points.remove(panel.points.size() - 1);
+				panel.repaint();
+				return true;
+			}
+
 		if ((e.getKeyCode() == KeyEvent.VK_C)) {
 			PreviewPanel.points.clear();
 			return true;
 		}
+
 		return false;
 	}
 

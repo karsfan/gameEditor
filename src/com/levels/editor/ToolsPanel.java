@@ -72,22 +72,22 @@ public class ToolsPanel extends JPanel implements ActionListener {
 
 	private BufferedImage homesLabelImage = loader.loadImage("/labels/homes.png");
 	private JLabel homesLabel = new JLabel(new ImageIcon(homesLabelImage));
-	
+
 	private BufferedImage ambientationsLabelImage = loader.loadImage("/labels/ambientation.png");
 	private JLabel ambientationsLabel = new JLabel(new ImageIcon(ambientationsLabelImage));
-	
+
 	private BufferedImage floorsLabelImage = loader.loadImage("/labels/floors.png");
 	private JLabel floorsLabel = new JLabel(new ImageIcon(floorsLabelImage));
-	
-	private BufferedImage toolsLabelImage = loader.loadImage("/labels/tools.png");
-	private JLabel toolsLabel = new JLabel(new ImageIcon(toolsLabelImage));
-	
+
+//	private BufferedImage toolsLabelImage = loader.loadImage("/labels/tools.png");
+//	private JLabel toolsLabel = new JLabel(new ImageIcon(toolsLabelImage));
+
 	private BufferedImage emptyLabelImage = loader.loadImage("/labels/empty.png");
 	private JLabel emptyLabel = new JLabel(new ImageIcon(emptyLabelImage));
 
 	private JPanel elements = new JPanel(new FlowLayout());
 	private JPanel tools = new JPanel(new FlowLayout());
-	
+
 	public ToolsPanel(PreviewPanel pp) {
 		super();
 		this.pp = pp;
@@ -95,14 +95,14 @@ public class ToolsPanel extends JPanel implements ActionListener {
 		setFocusable(true);
 		add(elements, BorderLayout.CENTER);
 		add(tools, BorderLayout.SOUTH);
-	    
-	    elements.add(homesLabel);
+
+		elements.add(homesLabel);
 		createButton(home, homeImage, elements);
 		createButton(shop, shopImage, elements);
 		createButton(preEnemyHome, preEnemyHomeImage, elements);
 		createButton(temple, templeImage, elements);
 		createButton(castle, castleImage, elements);
-		
+
 		elements.add(ambientationsLabel);
 		createButton(tree, treeImage, elements);
 		createButton(forest1, forest1Image, elements);
@@ -112,21 +112,21 @@ public class ToolsPanel extends JPanel implements ActionListener {
 		createButton(rock, rockImage, elements);
 		createButton(ground, groundImage, elements);
 		createButton(water, waterImage, elements);
-		
+
 		elements.add(floorsLabel);
 		createButton(floor, floorImage, elements);
 		createButton(floor2, floor2Image, elements);
 		createButton(floor3, floor3Image, elements);
 		createButton(road, roadImage, elements);
-		
-		//tools.add(toolsLabel);
+
+		// tools.add(toolsLabel);
 		createButton(grid, gridImage, tools);
 		createButton(canc, cancImage, tools);
 		createButton(undo, undoImage, tools);
 		createButton(fill, fillImage, tools);
 		createButton(clear, clearImage, tools);
 		createButton(zoomIn, zoomInImage, tools);
-		
+
 		pp.paintImage = homeImage;
 		pp.currentElement = Element.HOME;
 		pp.size = new Dimension(PreviewPanel.scale * 2, PreviewPanel.scale * 2);
@@ -192,11 +192,10 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	public static BufferedImage getThreeImage() {
 		return treeImage;
 	}
-	
+
 	public static BufferedImage getCastleImage() {
 		return castleImage;
 	}
-
 
 	public static BufferedImage getStrawImage() {
 		return strawImage;
@@ -266,20 +265,23 @@ public class ToolsPanel extends JPanel implements ActionListener {
 			pp.size = new Dimension(128, 96);
 			pp.remove = false;
 			pp.fill = false;
-			
-		} else if (e.getSource() == castle) {
-			pp.paintImage = castleImage;
-			pp.currentElement = Element.CASTLE;
-			pp.size = new Dimension(160, 160);
-			pp.remove = false;
-			pp.fill = false;
 
+		} else if (e.getSource() == castle) {
+			if (!pp.insertedCastle) {
+				pp.paintImage = castleImage;
+				pp.currentElement = Element.CASTLE;
+				pp.size = new Dimension(160, 160);
+				pp.remove = false;
+				pp.fill = false;
+			}
 		} else if (e.getSource() == shop) {
-			pp.paintImage = shopImage;
-			pp.currentElement = Element.SHOP;
-			pp.size = new Dimension(64, 64);
-			pp.remove = false;
-			pp.fill = false;
+			if (!pp.insertedShop) {
+				pp.paintImage = shopImage;
+				pp.currentElement = Element.SHOP;
+				pp.size = new Dimension(64, 64);
+				pp.remove = false;
+				pp.fill = false;
+			}
 
 		} else if (e.getSource() == straw) {
 			pp.paintImage = strawImage;
@@ -380,9 +382,16 @@ public class ToolsPanel extends JPanel implements ActionListener {
 
 		} else if (e.getSource() == clear) {
 			pp.points.clear();
+			pp.insertedCastle = false;
+			pp.insertedShop = false;
 			pp.repaint();
 
 		} else if (e.getSource() == undo) {
+			if (pp.points.elementAt(pp.points.size() - 1).getElement() == Element.CASTLE)
+				pp.insertedCastle = false;
+			if (pp.points.elementAt(pp.points.size() - 1).getElement() == Element.SHOP)
+				pp.insertedShop = false;
+
 			pp.points.remove(pp.points.size() - 1);
 			pp.repaint();
 
