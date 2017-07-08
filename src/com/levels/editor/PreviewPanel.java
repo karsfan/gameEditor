@@ -30,10 +30,10 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 	public boolean grid;
 	public boolean above;
 	Tile tiledisegnare;
-	
+
 	static boolean insertedShop = false;
 	static boolean insertedCastle = false;
-	
+
 	public PreviewPanel() {
 		super();
 		setFocusable(true);
@@ -58,7 +58,7 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 
 		setPreferredSize(new Dimension(P_WIDTH, P_HEIGHT));
 		setMinimumSize(new Dimension(1020, 700));
-		
+
 	}
 
 	public void paintComponent(Graphics g) {
@@ -149,18 +149,6 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 		Point p = clickToGrid(x, y);
 		Tile cp = new Tile(p, paintImage, currentElement, size);
 
-		
-		
-		if ((cp.getElement() == Element.SHOP && insertedShop) || (cp.getElement() == Element.CASTLE && insertedCastle)) {
-			JOptionPane.showMessageDialog(this, "Hai già inserito questo elemento!");
-			return;
-		}
-
-		if (cp.getElement() == Element.SHOP)
-			insertedShop = true;
-		if (cp.getElement() == Element.CASTLE) 
-			insertedCastle = true;
-		
 		if (remove) // bisogna eliminare il tiledadisegnare
 			delete(clickToGrid(x, y));
 		else if (fill)
@@ -169,8 +157,19 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 			if (!duplicate(cp))
 				points.add(0, cp);
 		} else if (!existTile(cp))
-			if (!duplicate(cp))
+			if (!duplicate(cp)) {
+				if ((cp.getElement() == Element.SHOP && insertedShop)
+						|| (cp.getElement() == Element.CASTLE && insertedCastle)) {
+					JOptionPane.showMessageDialog(this, "Hai già inserito questo elemento!");
+					return;
+				}
+				if (cp.getElement() == Element.SHOP)
+					insertedShop = true;
+				if (cp.getElement() == Element.CASTLE)
+					insertedCastle = true;
+
 				points.add(cp);
+			}
 
 		repaint();
 	}
@@ -240,6 +239,10 @@ public class PreviewPanel extends JPanel implements MouseListener, MouseMotionLi
 				if (point.getX() <= (tmp.getSize().getWidth() / scale + tmp.getPoint().getX() - 1)
 						&& point.getY() <= (tmp.getSize().getHeight() / scale + tmp.getPoint().getY() - 1)
 						&& point.getX() >= tmp.getPoint().getX() && point.getY() >= tmp.getPoint().getY()) {
+					if (points.elementAt(i).getElement() == Element.CASTLE)
+						insertedCastle = false;
+					if (points.elementAt(i).getElement() == Element.SHOP)
+						insertedShop = false;
 					points.remove(i);
 					break;
 				}

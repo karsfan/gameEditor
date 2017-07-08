@@ -1,7 +1,6 @@
 package com.levels.editor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -80,8 +79,8 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private BufferedImage floorsLabelImage = loader.loadImage("/labels/floors.png");
 	private JLabel floorsLabel = new JLabel(new ImageIcon(floorsLabelImage));
 
-	private BufferedImage toolsLabelImage = loader.loadImage("/labels/tools.png");
-	private JLabel toolsLabel = new JLabel(new ImageIcon(toolsLabelImage));
+//	private BufferedImage toolsLabelImage = loader.loadImage("/labels/tools.png");
+//	private JLabel toolsLabel = new JLabel(new ImageIcon(toolsLabelImage));
 
 	private BufferedImage emptyLabelImage = loader.loadImage("/labels/empty.png");
 	private JLabel emptyLabel = new JLabel(new ImageIcon(emptyLabelImage));
@@ -383,9 +382,16 @@ public class ToolsPanel extends JPanel implements ActionListener {
 
 		} else if (e.getSource() == clear) {
 			pp.points.clear();
+			pp.insertedCastle = false;
+			pp.insertedShop = false;
 			pp.repaint();
 
 		} else if (e.getSource() == undo) {
+			if (pp.points.elementAt(pp.points.size() - 1).getElement() == Element.CASTLE)
+				pp.insertedCastle = false;
+			if (pp.points.elementAt(pp.points.size() - 1).getElement() == Element.SHOP)
+				pp.insertedShop = false;
+
 			pp.points.remove(pp.points.size() - 1);
 			pp.repaint();
 
