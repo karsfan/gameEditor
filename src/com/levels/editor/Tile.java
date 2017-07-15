@@ -67,6 +67,11 @@ public class Tile implements ICollidable {
 			image = ToolsPanel.getRockImage();
 			size = new Dimension(32, 32);
 			break;
+		case "LAMP":
+			this.element = Element.LAMP;
+			image = ToolsPanel.getLampImage();
+			size = new Dimension(16, 48);
+			break;
 		case "TEMPLE":
 			this.element = Element.TEMPLE;
 			image = ToolsPanel.getTempleImage();
