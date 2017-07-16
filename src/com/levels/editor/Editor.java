@@ -180,6 +180,9 @@ public class Editor extends JFrame implements KeyEventDispatcher {
 					if (cp.getElement() == Element.ROCK)
 						fw.write("ROCK " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");
+					if (cp.getElement() == Element.LAMP)
+						fw.write("LAMP " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
+								+ ";\r\n");
 					if (cp.getElement() == Element.TEMPLE)
 						fw.write("TEMPLE " + "X" + (int) cp.getPoint().getX() + "Y" + (int) cp.getPoint().getY()
 								+ ";\r\n");

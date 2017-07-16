@@ -1,4 +1,5 @@
 /com/
+<<<<<<< HEAD
 /eraser.png
 /eraser2.png
 /fill.png
@@ -6,6 +7,12 @@
 /floor2.png
 /floor3.png
 /forest1.png
+=======
+<<<<<<< HEAD
+/lamp.png
+=======
+<<<<<<< HEAD
+>>>>>>> 861c1196cdbbca9711978f3f576787bc68b8e9a6
 /forest2.png
 /grid.png
 /ground.png
@@ -23,3 +30,10 @@
 /undo.png
 /water.png
 /zoom.png
+<<<<<<< HEAD
+=======
+=======
+/labels/
+>>>>>>> b641114c145ccd23e1e38965ff24309c66946be0
+>>>>>>> 79414e27b7ca6910fa562a960a4dbd2a04ae8bd5
+>>>>>>> 861c1196cdbbca9711978f3f576787bc68b8e9a6

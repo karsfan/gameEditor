@@ -16,7 +16,7 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	public enum Element {
-		HOME, GROUND, BUILDING, WATER, ROCK, TEMPLE, ROAD, FLOOR, TREE, FOREST1, FOREST2, FLOOR2, FLOOR3, SHOP, STRAW, PREENEMYHOME, CASTLE
+		HOME, GROUND, BUILDING, WATER, ROCK, TEMPLE, ROAD, FLOOR, TREE, FOREST1, FOREST2, FLOOR2, FLOOR3, SHOP, STRAW, PREENEMYHOME, CASTLE, LAMP
 	};
 
 	private PreviewPanel pp;
@@ -33,6 +33,7 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private JButton floor3 = new JButton();
 	private JButton road = new JButton();
 	private JButton water = new JButton();
+	private JButton lamp = new JButton();
 	private JButton rock = new JButton();
 	private JButton forest1 = new JButton();
 	private JButton forest2 = new JButton();
@@ -59,6 +60,7 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private static BufferedImage roadImage = loader.loadImage("/road.png");
 	private static BufferedImage waterImage = loader.loadImage("/water.png");
 	private static BufferedImage rockImage = loader.loadImage("/rock.png");
+	private static BufferedImage lampImage = loader.loadImage("/lamp.png");
 	private static BufferedImage forest1Image = loader.loadImage("/forest1.png");
 	private static BufferedImage forest2Image = loader.loadImage("/forest2.png");
 
@@ -79,8 +81,9 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	private BufferedImage floorsLabelImage = loader.loadImage("/labels/floors.png");
 	private JLabel floorsLabel = new JLabel(new ImageIcon(floorsLabelImage));
 
-//	private BufferedImage toolsLabelImage = loader.loadImage("/labels/tools.png");
-//	private JLabel toolsLabel = new JLabel(new ImageIcon(toolsLabelImage));
+	// private BufferedImage toolsLabelImage =
+	// loader.loadImage("/labels/tools.png");
+	// private JLabel toolsLabel = new JLabel(new ImageIcon(toolsLabelImage));
 
 	private BufferedImage emptyLabelImage = loader.loadImage("/labels/empty.png");
 	private JLabel emptyLabel = new JLabel(new ImageIcon(emptyLabelImage));
@@ -109,6 +112,7 @@ public class ToolsPanel extends JPanel implements ActionListener {
 		createButton(forest2, forest2Image, elements);
 		createButton(straw, strawImage, elements);
 		elements.add(emptyLabel);
+		createButton(lamp, lampImage, elements);
 		createButton(rock, rockImage, elements);
 		createButton(ground, groundImage, elements);
 		createButton(water, waterImage, elements);
@@ -133,7 +137,10 @@ public class ToolsPanel extends JPanel implements ActionListener {
 	}
 
 	void createButton(JButton button, BufferedImage image, JPanel panel) {
-		button.setIcon(new ImageIcon(image.getScaledInstance(32, 32, 0)));
+		if (button == lamp)
+			button.setIcon(new ImageIcon(image.getScaledInstance(16, 32, 0)));
+		else
+			button.setIcon(new ImageIcon(image.getScaledInstance(32, 32, 0)));
 		button.addActionListener(this);
 		button.setPreferredSize(new Dimension(40, 40));
 		button.setBorderPainted(false);
@@ -239,6 +246,10 @@ public class ToolsPanel extends JPanel implements ActionListener {
 
 	public static BufferedImage getRockImage() {
 		return rockImage;
+	}
+
+	public static BufferedImage getLampImage() {
+		return lampImage;
 	}
 
 	public static BufferedImage getForest1Image() {
@@ -348,6 +359,13 @@ public class ToolsPanel extends JPanel implements ActionListener {
 			pp.paintImage = rockImage;
 			pp.currentElement = Element.ROCK;
 			pp.size = new Dimension(32, 32);
+			pp.remove = false;
+			pp.fill = false;
+
+		} else if (e.getSource() == lamp) {
+			pp.paintImage = lampImage;
+			pp.currentElement = Element.LAMP;
+			pp.size = new Dimension(32, 64);
 			pp.remove = false;
 			pp.fill = false;
 
